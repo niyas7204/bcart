@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:amazone_clone/auth/model/user_model.dart';
 import 'package:amazone_clone/auth/services/auth_service.dart';
 import 'package:amazone_clone/core/handler.dart';
-import 'package:amazone_clone/core/state.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -20,7 +17,6 @@ class UserProvider extends ChangeNotifier {
       required String password}) async {
     setUser = StateHandler.loading();
 
-    notifyListeners();
     if (password.length < 6) {
       setUser = StateHandler.error("password must be at least 6 characters");
     } else {
@@ -29,10 +25,10 @@ class UserProvider extends ChangeNotifier {
 
       result.fold(
         (l) {
-          setUser = StateHandler.error(l.errorMessage);
+          return setUser = StateHandler.error(l.errorMessage);
         },
         (r) {
-          setUser = StateHandler.success(r);
+          return setUser = StateHandler.success(r);
         },
       );
     }
@@ -44,10 +40,10 @@ class UserProvider extends ChangeNotifier {
         await AuthService.userSignIn(email: email, password: password);
     result.fold(
       (l) {
-        setUser = StateHandler.error(l.errorMessage);
+        return setUser = StateHandler.error(l.errorMessage);
       },
       (r) {
-        setUser = StateHandler.success(r);
+        return setUser = StateHandler.success(r);
       },
     );
   }

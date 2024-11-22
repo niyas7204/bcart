@@ -7,7 +7,7 @@ import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:amazone_clone/auth/presentation/pages/signup_page.dart';
 import 'package:amazone_clone/auth/presentation/widgets/auth_button.dart';
 import 'package:amazone_clone/auth/presentation/widgets/auth_textfield.dart';
-import 'package:amazone_clone/home/presentation/pages/home_page.dart';
+import 'package:amazone_clone/user/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final authProvider = Provider.of<UserProvider>(context);
     authProvider.addListener(
       () {
+        log("auth service status ${authProvider.user.status}");
         if (authProvider.user.status == StateStatuse.success) {
           emailController.clear();
 
@@ -140,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                 WhiteSpaces.height20,
                 GestureDetector(
                   onTap: () {
+                    authProvider.setUser = StateHandler.initial();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

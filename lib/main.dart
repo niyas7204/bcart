@@ -1,11 +1,21 @@
+import 'package:amazone_clone/admin/features/home/admin_landing_page.dart';
+import 'package:amazone_clone/admin/features/products/presentation/pages/add_product.dart';
+import 'package:amazone_clone/admin/features/products/provider/add_prducti_provider.dart';
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => UserProvider(), child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => AddPrductiProvider(),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

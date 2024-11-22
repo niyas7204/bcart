@@ -1,3 +1,3 @@
-class SharedKeys {
+class ConstantKeys {
   static String accesToken = "auth-token";
 }

@@ -1,17 +1,17 @@
-sealed class AppState {}
+// sealed class AppState {}
 
-class SuccessState<T> extends AppState {
-  final T data;
+// class SuccessState<T> extends AppState {
+//   final T data;
 
-  SuccessState({required this.data});
-}
+//   SuccessState({required this.data});
+// }
 
-class LoadingState extends AppState {}
+// class LoadingState extends AppState {}
 
-class ErrorState extends AppState {
-  final String errorMessage;
+// class ErrorState extends AppState {
+//   final String errorMessage;
 
-  ErrorState({required this.errorMessage});
-}
+//   ErrorState({required this.errorMessage});
+// }
 
-class InitialState extends AppState {}
+// class InitialState extends AppState {}
