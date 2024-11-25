@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String baseUrl =
     "https://4000-idx-shopsy-1727332260757.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev";
 const String bearedToken =
-    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Nsb3VkLmdvb2dsZS5jb20vd29ya3N0YXRpb25zIiwiYXVkIjoiaWR4LXNob3BzeS0xNzI3MzMyMjYwNzU3LmNsdXN0ZXItYTNncmp6ZWs2NWN4ZXg3NjJlNG13cnpsNDYuY2xvdWR3b3Jrc3RhdGlvbnMuZGV2IiwiaWF0IjoxNzMyMTg3Njg3LCJleHAiOjE3MzIyNzQwODd9.fmaVQSsK-Hw9yGxgqg5E31yzbTX1VVzAg7keZBTGh3x2eTooqUOQVqSqWKu9uBh8HzzZOVNZfu0CwL4XYwefF4lDOIT0Q1-HiDRz1zAFVqgVIbn4EzOTJArbVivFI2GHLamvhSwOy0iZqW5-qcvb4sH5m1RXBtT40NTem7RvGeWVZu19bNDG93AZVEW_pwHOWd60l5I29lj60xG0lG3PYzzVGYwz85djXjTmOoFObN9sttzIPG_eVQjORlxWiCqmME8EsAI6vIQR4e2Zp9frHvFZHbD1G36vYBwoDrINup7fnsKUqyyxBM-G8JdXiKoTxvG0pV_Y0rMl2JfAIBRdTA";
+    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Nsb3VkLmdvb2dsZS5jb20vd29ya3N0YXRpb25zIiwiYXVkIjoiaWR4LXNob3BzeS0xNzI3MzMyMjYwNzU3LmNsdXN0ZXItYTNncmp6ZWs2NWN4ZXg3NjJlNG13cnpsNDYuY2xvdWR3b3Jrc3RhdGlvbnMuZGV2IiwiaWF0IjoxNzMyNTMxNTU3LCJleHAiOjE3MzI2MTc5NTd9.jp-CxVVeVJHOLmoBiBqKRRqbhqEb3FEeRbGif893mnkbOOOzlKn_JrSkqCayeS80XcS69HrLdmt5YsG_dL55GntUE3DjBzqh37_JEOns9UHLf5r7yet6B2LPJvk04j9Rfbu_OsI_BKdEsMw0gyyY1KaJTTuRq-LFQcxF4VeGPhjBuZMTqLb8b7JWk5iijALlZpiKKZtQ_tk2Z-hZMe0gKZ6PIgD61d4UybfS8mjBHCIDcKeg003sPJTgYnOvDpEab7nAKdr8t3ZAwi8DE_E58GMBHpmE4tr6WZTieedUsul3z2wQd2Vqa9HNJvSRYzXsDLMA4Tj5jFhMEex1nZcamg";
 
 class AuthService {
   static Future<Either<Failure, User>> userSignUp(
@@ -32,9 +32,9 @@ class AuthService {
           });
       log("======= status ${response.statusCode} data ${response.body}");
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final String accessToken = jsonDecode(response.body)["access_token"];
+        final String accessToken = jsonDecode(response.body)["Access-Token"];
         sharedPreferences.setString(ConstantKeys.accesToken, accessToken);
-
+        log("Signup response ${response.body}");
         return right(User.fromJson(response.body));
       } else {
         log("Signup Failure ${response.body}");
@@ -61,7 +61,7 @@ class AuthService {
             'Authorization': 'Bearer $bearedToken',
           });
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final String accessToken = jsonDecode(response.body)["access_token"];
+        final String accessToken = jsonDecode(response.body)["Access-Token"];
         sharedPreferences.setString(ConstantKeys.accesToken, accessToken);
 
         return right(User.fromJson(response.body));
@@ -85,3 +85,6 @@ class AuthService {
   //   } catch (e) {}
   // }
 }
+// {"message":"Success",
+// "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDAxYTFiYWQ1Y2RkMGVkOGVkMzA3OSIsImlhdCI6MTczMjI1NTQ3Mn0.2EV6z_anqCZN1JHJ9OnD4FB5hP29J0mA08eJuewCkm4",
+// "user":{"_id":"67401a1bad5cdd0ed8ed3079","name":"admin123","email":"admin123@gmail.com","userType":"user","__v":0}}

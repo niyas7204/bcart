@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:amazone_clone/auth/model/user_model.dart';
 import 'package:amazone_clone/auth/services/auth_service.dart';
 import 'package:amazone_clone/core/handler.dart';
@@ -8,6 +10,7 @@ class UserProvider extends ChangeNotifier {
   StateHandler<User> get userSate => user;
   set setUser(StateHandler<User> newUser) {
     user = newUser;
+    log("new user status ${newUser.status} value ${user.data}");
     notifyListeners();
   }
 

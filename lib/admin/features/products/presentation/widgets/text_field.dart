@@ -1,5 +1,6 @@
 import 'package:amazone_clone/core/contants/colors.dart';
- import 'package:flutter/material.dart';
+import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:flutter/material.dart';
 
 class ProductTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -22,6 +23,7 @@ class ProductTextField extends StatefulWidget {
 
 class _ProductTextFieldState extends State<ProductTextField> {
   bool isObscure = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -30,56 +32,73 @@ class _ProductTextFieldState extends State<ProductTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.hintText,
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppTheme.primeryColor5),
-        ),
-        Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: AppTheme.primeryColor4,
-                    blurRadius: 3,
-                    blurStyle: BlurStyle.outer)
-              ],
-              // border: Border.all(
-              //   width: .5,
-              //   color: AppTheme.primeryColor4,
-              // ),
-              borderRadius: BorderRadius.circular(12)),
-          width: widget.width,
-          child: TextFormField(
-            keyboardType: widget.hintText == "Email"
-                ? TextInputType.emailAddress
-                : TextInputType.text,
-            obscureText: isObscure,
-            maxLines: widget.maxLine,
-            cursorErrorColor: AppTheme.primeryColor5,
-            cursorColor: AppTheme.primeryColor5,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "${widget.hintText} is missing";
-              }
-              return null;
-            },
-            controller: widget.controller,
-            decoration: const InputDecoration(
-              errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12),
-                  )),
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.hintText,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppTheme.primeryColor5),
           ),
-        ),
-      ],
+          Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: AppTheme.primeryColor4,
+                          blurRadius: 3,
+                          blurStyle: BlurStyle.outer)
+                    ],
+                    // border: Border.all(
+                    //   width: .5,
+                    //   color: AppTheme.primeryColor4,
+                    // ),
+                    borderRadius: BorderRadius.circular(12)),
+                width: widget.width,
+                height: 50,
+              ),
+              SizedBox(
+                width: widget.width,
+                height: 70,
+                child: TextFormField(
+                  clipBehavior: Clip.none,
+                  keyboardType: widget.hintText == "Email"
+                      ? TextInputType.emailAddress
+                      : TextInputType.text,
+                  obscureText: isObscure,
+                  maxLines: widget.maxLine,
+                  cursorErrorColor: AppTheme.primeryColor5,
+                  cursorColor: AppTheme.primeryColor5,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      // setState(() {
+                      //   errorMessage = ;
+                      // });
+                      return "${widget.hintText} is missing";
+                    }
+                    return null;
+                  },
+                  controller: widget.controller,
+                  decoration: const InputDecoration(
+                    errorStyle:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        )),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,13 +1,13 @@
-import 'package:amazone_clone/admin/features/products/models/product_model.dart';
+import 'dart:developer';
+
 import 'package:amazone_clone/admin/features/products/presentation/widgets/add_product_image.dart';
+import 'package:amazone_clone/admin/features/products/presentation/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/presentation/widgets/text_field.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_prducti_provider.dart';
-import 'package:amazone_clone/admin/features/products/service/add_product_service.dart';
+import 'package:amazone_clone/auth/presentation/widgets/auth_textfield.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +23,7 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController quantityController = TextEditingController();
   @override
   void dispose() {
     nameController.dispose();
@@ -35,16 +36,22 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     final addProductProivider = Provider.of<AddPrductiProvider>(context);
     final size = MediaQuery.of(context).size;
+    addProductProivider.addListener(
+      () {},
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text("Add Product"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
           child: Column(
             children: [
-              AddImage(),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: AddImage(),
+              ),
               WhiteSpaces.height20,
               ProductTextField(
                   width: size.width,
@@ -52,43 +59,47 @@ class _AddProductState extends State<AddProduct> {
                   hintText: "Product Name",
                   formKey: formKey,
                   maxLine: 1),
-              WhiteSpaces.height20,
               ProductTextField(
                   width: size.width,
-                  controller: nameController,
+                  controller: descriptionController,
                   hintText: "Description",
                   formKey: formKey,
                   maxLine: 5),
-              WhiteSpaces.height20,
               Row(
                 children: [
                   ProductTextField(
                       width: (size.width / 2) - 20,
-                      controller: nameController,
+                      controller: priceController,
                       hintText: "Price",
                       formKey: formKey,
                       maxLine: 1),
-                  WhiteSpaces.width20,
                   ProductTextField(
                       width: (size.width / 2) - 20,
-                      controller: nameController,
+                      controller: quantityController,
                       hintText: "Qauntity",
                       formKey: formKey,
                       maxLine: 1),
                 ],
               ),
-              WhiteSpaces.height20,
+              WhiteSpaces.height10,
               GestureDetector(
                 onTap: () {
-                  AddProductService.uploadProduct(
-                      product: ProductModel(
-                          name: "name",
-                          description: "description",
-                          price: 200,
-                          quantity: 5,
-                          images: ["images"],
-                          sellerId: "1",
-                          productId: "productId"));
+                  // if (addProductProivider.imageState.status ==
+                  //         StateStatuse.success &&
+                  //     addProductProivider.imageState.data!.isNotEmpty) {
+                  if (formKey.currentState!.validate()) {
+                    log("add product");
+                    addProductProivider.uploadProduct(
+                        context: context,
+                        price: double.parse(priceController.text.trim()),
+                        description: descriptionController.text.trim(),
+                        quantity: double.parse(quantityController.text.trim()),
+                        images: [],
+                        productName: nameController.text.trim());
+                  }
+                  // } else {
+                  //   showSnakbar(context, "Image not added");
+                  // }
                 },
                 child: Container(
                   height: 50,

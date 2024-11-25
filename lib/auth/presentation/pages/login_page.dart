@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
@@ -54,14 +55,21 @@ class _LoginPageState extends State<LoginPage> {
         log("auth service status ${authProvider.user.status}");
         if (authProvider.user.status == StateStatuse.success) {
           emailController.clear();
-
+          log("========= ${authProvider.user.data!.user.userType}");
           passwordController.clear();
+
+          authProvider.user.data!.user.userType == "admin"
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductList(),
+                  ))
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(),
+                  ));
           authProvider.setUser = StateHandler.initial();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
-              ));
         }
       },
     );

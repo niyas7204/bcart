@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:amazone_clone/admin/features/products/models/product_model.dart';
 import 'package:amazone_clone/auth/services/auth_service.dart';
+import 'package:amazone_clone/core/contants/key.dart';
 import 'package:amazone_clone/core/errors/error_handling.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddProductService {
   static Future<Either<Failure, List<File>>> getImage() async {
@@ -48,32 +50,31 @@ class AddProductService {
     }
   }
 
-  static Future<void> uploadProduct({required ProductModel product}) async {
+  static Future<Either<Failure, ProductModel>> uploadProduct(
+      {required ProductModel product, required String accessToken}) async {
     try {
-      log("======== $product");
-      log("product json ${product.toJson()}");
-      log("encode ${jsonEncode(product.toJson())}");
-      // final body = jsonEncode({
-      //   "product_name": "name",
-      //   "description": "description",
-      //   "price": 200,
-      //   "quantity": 5,
-      //   "images": ["images"],
-      //   "seller_id": "1",
-      // });
-      // log("=== product $body");
       final String url = "$baseUrl/api/admin/addProduct";
       final response = await http
           .post(Uri.parse(url), body: jsonEncode(product.toJson()), headers: {
+        'Access-Token': accessToken,
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $bearedToken',
       });
       log("====== statuscode ${response.statusCode} result ${response.body}");
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        log("------- success ${response.body}");
+        final result = jsonDecode(response.body);
+
+        final product = productModelFromJson(jsonEncode(result["product"]));
+        return right(product);
+      } else {
+        log("add product failure ${response.body}");
+        final result = jsonDecode(response.body);
+        log("===== ${result["error"]}");
+        return left(Failure(errorMessage: result["error"]));
       }
     } catch (e) {
-      log("------- error $e");
+      log("product upload error $e");
+      return left(Failure(errorMessage: "Failed to upload product"));
     }
   }
 }

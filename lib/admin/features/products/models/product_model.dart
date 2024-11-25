@@ -25,8 +25,8 @@ class ProductModel {
   @JsonKey(name: "images")
   List<String> images;
   @JsonKey(name: "seller_id")
-  String sellerId;
-  @JsonKey(name: "product_id")
+  String? sellerId;
+  @JsonKey(name: "_id")
   String? productId;
 
   ProductModel({
