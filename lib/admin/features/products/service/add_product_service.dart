@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:amazone_clone/admin/features/products/models/product_model.dart';
+import 'package:amazone_clone/admin/features/products/models/products_model.dart';
 import 'package:amazone_clone/auth/services/auth_service.dart';
 import 'package:amazone_clone/core/contants/key.dart';
 import 'package:amazone_clone/core/errors/error_handling.dart';
@@ -64,7 +64,8 @@ class AddProductService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final result = jsonDecode(response.body);
 
-        final product = productModelFromJson(jsonEncode(result["product"]));
+        final product =
+            ProductModel.fromJson(result["product"] as Map<String, dynamic>);
         return right(product);
       } else {
         log("add product failure ${response.body}");
@@ -74,6 +75,33 @@ class AddProductService {
       }
     } catch (e) {
       log("product upload error $e");
+      return left(Failure(errorMessage: "Failed to upload product"));
+    }
+  }
+
+  static Future<Either<Failure, ProductsListModel>> getProduct(
+      {required String accessToken}) async {
+    try {
+      final String url = "$baseUrl/api/admin/getProduct";
+      final response = await http.get(Uri.parse(url), headers: {
+        'Access-Token': accessToken,
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $bearedToken',
+      });
+      log("====== statuscode ${response.statusCode} result ${response.body}");
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final result = jsonDecode(response.body);
+
+        final product = productsListModelFromJson(response.body);
+        return right(product);
+      } else {
+        log("add product failure ${response.body}");
+        final result = jsonDecode(response.body);
+        log("===== ${result["error"]}");
+        return left(Failure(errorMessage: result["error"]));
+      }
+    } catch (e) {
+      log("product get error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
     }
   }

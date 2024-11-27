@@ -1,10 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_model.dart';
+part of 'products_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+ProductsListModel _$ProductsListModelFromJson(Map<String, dynamic> json) =>
+    ProductsListModel(
+      products: (json['products'] as List<dynamic>)
+          .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ProductsListModelToJson(ProductsListModel instance) =>
+    <String, dynamic>{
+      'products': instance.products,
+    };
 
 ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
       name: json['product_name'] as String,

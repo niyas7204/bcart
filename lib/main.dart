@@ -1,5 +1,5 @@
 import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
-import 'package:amazone_clone/admin/features/products/provider/add_prducti_provider.dart';
+import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
 import 'package:amazone_clone/core/contants/key.dart';
@@ -19,7 +19,7 @@ void main() async {
           create: (context) => UserProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AddPrductiProvider(),
+          create: (context) => ProductProvider(),
         )
       ],
       child: MyApp(
