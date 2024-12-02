@@ -1,16 +1,32 @@
 // To parse this JSON data, do
 //
-//     final chatMessageModel = chatMessageModelFromJson(jsonString);
+//     final ProductsListModel = ProductsListModelFromJson(jsonString);
 
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
-part 'product_model.g.dart';
+part 'products_model.g.dart';
 
-ProductModel productModelFromJson(String str) =>
-    ProductModel.fromJson(json.decode(str));
+ProductsListModel productsListModelFromJson(String str) =>
+    ProductsListModel.fromJson(json.decode(str));
 
-String productModelToJson(ProductModel data) => json.encode(data.toJson());
+String productsListModelToJson(ProductsListModel data) =>
+    json.encode(data.toJson());
+
+@JsonSerializable()
+class ProductsListModel {
+  @JsonKey(name: "products")
+  List<ProductModel> products;
+
+  ProductsListModel({
+    required this.products,
+  });
+
+  factory ProductsListModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductsListModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductsListModelToJson(this);
+}
 
 @JsonSerializable()
 class ProductModel {
@@ -18,6 +34,8 @@ class ProductModel {
   String name;
   @JsonKey(name: "description")
   String description;
+  @JsonKey(name: "category")
+  String? category;
   @JsonKey(name: "price")
   double price;
   @JsonKey(name: "quantity")
@@ -32,6 +50,7 @@ class ProductModel {
   ProductModel({
     required this.name,
     required this.description,
+    required this.category,
     required this.price,
     required this.quantity,
     required this.images,
