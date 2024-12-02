@@ -1,4 +1,4 @@
-import 'package:amazone_clone/admin/features/products/provider/add_prducti_provider.dart';
+import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
@@ -13,9 +13,9 @@ class AddImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addProductProivider = Provider.of<AddPrductiProvider>(context);
-    return addProductProivider.imageState.status == StateStatuse.success &&
-            addProductProivider.imageState.data!.isNotEmpty
+    final productProivider = Provider.of<ProductProvider>(context);
+    return productProivider.imageState.status == StateStatuse.success &&
+            productProivider.imageState.data!.isNotEmpty
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,9 +42,9 @@ class AddImage extends StatelessWidget {
               ),
               WhiteSpaces.height10,
               CarouselSlider(
-                  items: addProductProivider.imageState.data!
+                  items: productProivider.imageState.data!
                       .map(
-                        (e) => Image.file(e!),
+                        (e) => Image.file(e),
                       )
                       .toList(),
                   options: CarouselOptions(viewportFraction: 1, height: 200)),
@@ -52,7 +52,7 @@ class AddImage extends StatelessWidget {
           )
         : GestureDetector(
             onTap: () {
-              addProductProivider.selectImages();
+              productProivider.selectImages();
             },
             child: DottedBorder(
                 radius: Radius.circular(12),

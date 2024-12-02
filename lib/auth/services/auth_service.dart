@@ -11,6 +11,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const String baseUrl =
     "https://4000-idx-shopsy-1727332260757.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev";
+<<<<<<< HEAD
+=======
+const String bearedToken =
+    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Nsb3VkLmdvb2dsZS5jb20vd29ya3N0YXRpb25zIiwiYXVkIjoiaWR4LXNob3BzeS0xNzI3MzMyMjYwNzU3LmNsdXN0ZXItYTNncmp6ZWs2NWN4ZXg3NjJlNG13cnpsNDYuY2xvdWR3b3Jrc3RhdGlvbnMuZGV2IiwiaWF0IjoxNzMyNjg0ODYwLCJleHAiOjE3MzI3NzEyNjB9.fbIIb62EPZJ5PTA-rqFHCzP0Y5C73qBKpvRA9HJu4V2DS-ZgTHPrlmKVpB0voGY-Jvm1QMBhg45JDiHdJXghqy9-FBdRwP4rW57IrT9e-1uHX7UTMbI6MjWEWUzN1P9ttRB6PJG05guykhce84fPFOd-RMfKvzUMY-OpIMPWutHBgm3RX1x9WGLSWCgIWAQBJ-tqzPTCOzKI0t-uzMQeL49BSMgKlxV9zAhEprLnCXtPCLx6qbxB4JmB9sI4Iid7M4YPmKbcNaPG3seGQzk7bIzhG_ffMtjIPxzf2hR1mKqrlVBXcWRE-FgTEg11YuSAyl8Fi1CAFky8VPlmyf0X9g";
+>>>>>>> origin/main
 
 class AuthService {
   static Future<Either<Failure, User>> userSignUp(

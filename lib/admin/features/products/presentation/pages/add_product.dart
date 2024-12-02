@@ -5,6 +5,10 @@ import 'package:amazone_clone/admin/features/products/presentation/widgets/drop_
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/presentation/widgets/text_field.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
+<<<<<<< HEAD
+=======
+import 'package:amazone_clone/auth/presentation/widgets/auth_textfield.dart';
+>>>>>>> origin/main
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
@@ -40,8 +44,11 @@ class _AddProductState extends State<AddProduct> {
     productProivider.addListener(
       () {
         if (productProivider.addproductState.status == StateStatuse.success) {
+<<<<<<< HEAD
           log("===== ${productProivider.addproductState.status}");
           categoryController.clear();
+=======
+>>>>>>> origin/main
           nameController.clear();
           descriptionController.clear();
           priceController.clear();
@@ -113,7 +120,10 @@ class _AddProductState extends State<AddProduct> {
                         log("add product");
                         productProivider.uploadProduct(
                             context: context,
+<<<<<<< HEAD
                             category: categoryController.text,
+=======
+>>>>>>> origin/main
                             price: double.parse(priceController.text.trim()),
                             description: descriptionController.text.trim(),
                             quantity:
