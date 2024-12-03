@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:amazone_clone/admin/features/products/presentation/pages/add_product.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-<<<<<<< HEAD
 import 'package:amazone_clone/admin/features/products/service/add_product_service.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
@@ -16,13 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-=======
-import 'package:amazone_clone/auth/provider/user_provider.dart';
-import 'package:amazone_clone/core/contants/colors.dart';
-import 'package:amazone_clone/core/handler.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
->>>>>>> origin/main
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -46,10 +38,7 @@ class _ProductListState extends State<ProductList> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     final Size size = MediaQuery.of(context).size;
-=======
->>>>>>> origin/main
     final productProivider = Provider.of<ProductProvider>(context);
     final productState = productProivider.getproductState;
     productProivider.addListener(
@@ -61,7 +50,6 @@ class _ProductListState extends State<ProductList> {
       backgroundColor: Color(0xFFEEEEEE),
       //AppTheme.primeryColor6,
       body: Padding(
-<<<<<<< HEAD
         padding: EdgeInsets.only(left: 15, right: 15, top: 15),
         child: productState.status == StateStatuse.loading
             ? GridView.builder(
@@ -167,31 +155,6 @@ class _ProductListState extends State<ProductList> {
                       ))
                     : SizedBox(),
       ),
-=======
-          padding: const EdgeInsets.all(8.0),
-          child: productState.status == StateStatuse.loading
-              ? Center(child: CircularProgressIndicator())
-              : productState.status == StateStatuse.success
-                  ? GridView.builder(
-                      itemCount: productState.data!.products.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 1 / 1.2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          crossAxisCount: 2),
-                      itemBuilder: (context, index) => Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(productState
-                                    .data!.products[index].images[0])),
-                            borderRadius: BorderRadius.circular(12)),
-                        width: 50,
-                        height: 100,
-                      ),
-                    )
-                  : SizedBox()),
->>>>>>> origin/main
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(

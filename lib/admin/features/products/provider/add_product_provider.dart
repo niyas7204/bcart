@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:amazone_clone/admin/features/products/models/products_model.dart';
 import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
-import 'package:amazone_clone/admin/features/products/presentation/widgets/show_snackbar.dart';
+import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/service/add_product_service.dart';
 import 'package:amazone_clone/core/contants/key.dart';
 import 'package:amazone_clone/core/handler.dart';
@@ -52,10 +52,10 @@ class ProductProvider extends ChangeNotifier {
       {required List<File> images,
       required String productName,
       required String description,
+      required String category,
       required double price,
       required double quantity,
       required BuildContext context}) async {
-    setImage = StateHandler.loading();
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     final accestoken = sharedPreferences.getString(ConstantKeys.accesToken);
@@ -76,6 +76,7 @@ class ProductProvider extends ChangeNotifier {
               accessToken: accestoken,
               product: ProductModel(
                   name: productName,
+                  category: category,
                   description: "description",
                   price: price,
                   quantity: quantity,
@@ -83,21 +84,21 @@ class ProductProvider extends ChangeNotifier {
                   sellerId: null,
                   productId: null));
           product.fold((l) => setProduct = StateHandler.error(l.errorMessage),
-              (r) {
+              (r) async {
             showSnakbar(context, "product added successfully");
+            await getProduct();
+            setImage = StateHandler.initial();
             setProduct = StateHandler.success(r);
           });
         },
       );
     } else {
-      setImage = StateHandler.error("Failed to authenticate");
+      setProduct = StateHandler.error("Failed to authenticate");
     }
   }
 
   Future<void> getProduct() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    final accessToken = sharedPreferences.getString(ConstantKeys.accesToken);
+    final String? accessToken = await getAccessToken();
     if (accessToken != null) {
       setGetProduct = StateHandler.loading();
       final product =
@@ -110,4 +111,35 @@ class ProductProvider extends ChangeNotifier {
       setGetProduct = StateHandler.error("Failed to authenticate");
     }
   }
+
+  Future<void> deleteProduct(
+      {required String productId, required BuildContext context}) async {
+    final String? accessToken = await getAccessToken();
+    if (accessToken != null) {
+      final deleteProduct = await AddProductService.deleteProduct(
+          accessToken: accessToken, productId: productId);
+      deleteProduct.fold(
+        (l) {
+          showSnakbar(context, "Failed Delete Product");
+        },
+        (r) {
+          final products = _getProduct.data!;
+          for (var i = 0; i < products.products.length; i++) {
+            if (products.products[i].productId == r.productId) {
+              products.products.removeAt(i);
+              setGetProduct = StateHandler.success(products);
+            }
+          }
+          showSnakbar(context, "Product Deleted Successfuly");
+        },
+      );
+    }
+  }
+}
+
+Future<String?> getAccessToken() async {
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  final accessToken = sharedPreferences.getString(ConstantKeys.accesToken);
+  return accessToken;
 }

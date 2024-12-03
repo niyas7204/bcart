@@ -94,11 +94,10 @@ class AddProductService {
         final product = productsListModelFromJson(response.body);
         return right(product);
       } else {
-<<<<<<< HEAD
+ 
         log("get product failure ${response.body}");
-=======
         log("add product failure ${response.body}");
->>>>>>> origin/main
+ 
         final result = jsonDecode(response.body);
         log("===== ${result["error"]}");
         return left(Failure(errorMessage: result["error"]));
@@ -108,7 +107,7 @@ class AddProductService {
       return left(Failure(errorMessage: "Failed to upload product"));
     }
   }
-<<<<<<< HEAD
+ 
 
   static Future<Either<Failure, ProductModel>> deleteProduct(
       {required String accessToken, required String productId}) async {
@@ -138,6 +137,5 @@ class AddProductService {
       return left(Failure(errorMessage: "Failed to upload product"));
     }
   }
-=======
->>>>>>> origin/main
+ 
 }
