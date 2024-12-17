@@ -1,11 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
+ import 'dart:io';
 
 import 'package:amazone_clone/admin/features/products/models/products_model.dart';
-import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
+ import 'package:amazone_clone/admin/features/products/service/product_service.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
-import 'package:amazone_clone/admin/features/products/service/add_product_service.dart';
-import 'package:amazone_clone/core/contants/key.dart';
+ import 'package:amazone_clone/core/contants/key.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
