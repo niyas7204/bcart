@@ -1,8 +1,9 @@
-import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
+import 'package:amazone_clone/admin/features/home/admin_landing_page.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
 import 'package:amazone_clone/core/contants/key.dart';
+import 'package:amazone_clone/user/global/presentation/pages/user_landing_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: token != null ? ProductList() : const LoginPage(),
+      home: token != null ? AdminLandingPage() : const LoginPage(),
     );
   }
 }
