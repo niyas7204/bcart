@@ -1,13 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:amazone_clone/admin/features/products/models/category_model.dart';
 import 'package:amazone_clone/admin/features/products/models/products_model.dart';
-import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
+import 'package:amazone_clone/core/widgets/show_alert.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
-import 'package:amazone_clone/admin/features/products/service/add_product_service.dart';
+import 'package:amazone_clone/admin/features/products/service/product_service.dart';
 import 'package:amazone_clone/core/contants/key.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -15,9 +17,12 @@ class ProductProvider extends ChangeNotifier {
   StateHandler<List<File>> _images = StateHandler.initial();
   StateHandler<ProductModel> _addProduct = StateHandler.initial();
   StateHandler<ProductsListModel> _getProduct = StateHandler.initial();
+  StateHandler<CategoriesModel> _categories = StateHandler.initial();
+
   //getter for state
   StateHandler<ProductsListModel> get getproductState => _getProduct;
   StateHandler<List<File>> get imageState => _images;
+  StateHandler<CategoriesModel> get catogerisState => _categories;
   StateHandler<ProductModel> get addproductState => _addProduct;
 
   //setter for states
@@ -28,11 +33,22 @@ class ProductProvider extends ChangeNotifier {
 
   set setProduct(StateHandler<ProductModel> newProduct) {
     _addProduct = newProduct;
+
     notifyListeners();
   }
 
   set setGetProduct(StateHandler<ProductsListModel> products) {
+    if (products.status == StateStatuse.success) {
+      log("======== ${products.data!.toString()}");
+    }
+
     _getProduct = products;
+
+    notifyListeners();
+  }
+
+  set setCategoris(StateHandler<CategoriesModel> newCategories) {
+    _categories = newCategories;
     notifyListeners();
   }
 
@@ -56,44 +72,51 @@ class ProductProvider extends ChangeNotifier {
       required double price,
       required double quantity,
       required BuildContext context}) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    final accestoken = sharedPreferences.getString(ConstantKeys.accesToken);
-    if (accestoken != null) {
-      setProduct = StateHandler.loading();
-      //upload image on cloud
-      final result = await AddProductService.uploadImage(
-          productName: productName, images: images);
+    if (category.isEmpty) {
+      showAlertDiologe(
+          context: context, tittle: "Missing", content: "Select Category");
+    }
+    {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      final accestoken = sharedPreferences.getString(ConstantKeys.accesToken);
+      if (accestoken != null) {
+        setProduct = StateHandler.loading();
+        //upload image on cloud
 
-      result.fold(
-        (l) {
-          showSnakbar(context, "failed to upload image");
-          setProduct = StateHandler.error("Failed upload image");
-        },
-        (r) async {
-          //upload product
-          final product = await AddProductService.uploadProduct(
-              accessToken: accestoken,
-              product: ProductModel(
-                  name: productName,
-                  category: category,
-                  description: "description",
-                  price: price,
-                  quantity: quantity,
-                  images: r,
-                  sellerId: null,
-                  productId: null));
-          product.fold((l) => setProduct = StateHandler.error(l.errorMessage),
-              (r) async {
-            showSnakbar(context, "product added successfully");
-            await getProduct();
-            setImage = StateHandler.initial();
-            setProduct = StateHandler.success(r);
-          });
-        },
-      );
-    } else {
-      setProduct = StateHandler.error("Failed to authenticate");
+        final result = await AddProductService.uploadImage(
+            productName: productName, images: images);
+        result.fold(
+          (l) {
+            showSnakbar(context, "failed to upload image");
+            setProduct = StateHandler.error("Failed upload image");
+          },
+          (r) async {
+            //upload product
+            final product = await AddProductService.uploadProduct(
+                categoryName: category,
+                accessToken: accestoken,
+                product: ProductModel(
+                    name: productName,
+                    category: null,
+                    description: "description",
+                    price: price,
+                    quantity: quantity,
+                    images: r,
+                    sellerId: null,
+                    productId: null));
+            product.fold((l) => setProduct = StateHandler.error(l.errorMessage),
+                (r) async {
+              showSnakbar(context, "product added successfully");
+              await getProduct();
+              setImage = StateHandler.initial();
+              setProduct = StateHandler.success(r);
+            });
+          },
+        );
+      } else {
+        setProduct = StateHandler.error("Failed to authenticate");
+      }
     }
   }
 
@@ -103,6 +126,7 @@ class ProductProvider extends ChangeNotifier {
       setGetProduct = StateHandler.loading();
       final product =
           await AddProductService.getProduct(accessToken: accessToken);
+
       product.fold(
         (l) => setGetProduct = StateHandler.error(l.errorMessage),
         (r) => setGetProduct = StateHandler.success(r),
@@ -133,6 +157,46 @@ class ProductProvider extends ChangeNotifier {
           showSnakbar(context, "Product Deleted Successfuly");
         },
       );
+    }
+  }
+
+  Future<void> getCategories() async {
+    final String? accessToken = await getAccessToken();
+    if (accessToken != null) {
+      setGetProduct = StateHandler.loading();
+      final product =
+          await AddProductService.getCategories(accessToken: accessToken);
+
+      product.fold((l) => setCategoris = StateHandler.error(l.errorMessage),
+          (r) {
+        setCategoris = StateHandler.success(r);
+      });
+    } else {
+      setGetProduct = StateHandler.error("Failed to authenticate");
+    }
+  }
+
+  Future<void> createCategories({required String category}) async {
+    final String? accessToken = await getAccessToken();
+    if (accessToken != null) {
+      setGetProduct = StateHandler.loading();
+      final product = await AddProductService.createCategories(
+          category: category, accessToken: accessToken);
+      product.fold(
+        (l) {
+          log("add category error ${l.errorMessage}");
+        },
+        (r) {
+          CategoriesModel categoriesModel =
+              _categories.status == StateStatuse.success
+                  ? _categories.data!
+                  : CategoriesModel(categories: []);
+          categoriesModel.categories.add(r);
+          setCategoris = StateHandler.success(categoriesModel);
+        },
+      );
+    } else {
+      setGetProduct = StateHandler.error("Failed to authenticate");
     }
   }
 }

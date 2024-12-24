@@ -26,6 +26,20 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        final productProivider =
+            Provider.of<ProductProvider>(context, listen: false);
+
+        productProivider.getCategories();
+      },
+    );
+
+    super.initState();
+  }
+
+  @override
   void dispose() {
     nameController.dispose();
     descriptionController.dispose();
@@ -69,13 +83,13 @@ class _AddProductState extends State<AddProduct> {
                   width: size.width,
                   controller: nameController,
                   hintText: "Product Name",
-                  formKey: formKey,
+                  // formKey: formKey,
                   maxLine: 1),
               ProductTextField(
                   width: size.width,
                   controller: descriptionController,
                   hintText: "Description",
-                  formKey: formKey,
+                  // formKey: formKey,
                   maxLine: 5),
               Row(
                 children: [
@@ -83,21 +97,30 @@ class _AddProductState extends State<AddProduct> {
                       width: (size.width / 2) - 20,
                       controller: priceController,
                       hintText: "Price",
-                      formKey: formKey,
+                      // formKey: formKey,
                       maxLine: 1),
                   ProductTextField(
                       width: (size.width / 2) - 20,
                       controller: quantityController,
                       hintText: "Qauntity",
-                      formKey: formKey,
+                      // formKey: formKey,
                       maxLine: 1),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: CategoryDropdown(
-                  categoryController: categoryController,
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: CategoryDropdown(
+                      // formKey: formKey,
+                      categoryController: categoryController,
+                    ),
+                  ),
+                  // WhiteSpaces.width20,
+                  // ElevatedButton(onPressed: () {
+                  //   productProivider.createCategories(category: "")
+                  // }, child: Text("create"))
+                ],
               ),
               WhiteSpaces.height10,
               Padding(
@@ -110,16 +133,18 @@ class _AddProductState extends State<AddProduct> {
                         productProivider.addproductState.status !=
                             StateStatuse.loading) {
                       if (formKey.currentState!.validate()) {
-                        log("add product");
-                        productProivider.uploadProduct(
-                            context: context,
-                            category: categoryController.text,
-                            price: double.parse(priceController.text.trim()),
-                            description: descriptionController.text.trim(),
-                            quantity:
-                                double.parse(quantityController.text.trim()),
-                            images: productProivider.imageState.data!,
-                            productName: nameController.text.trim());
+                        if ((formKey.currentState!.validate())) {
+                          log("add product");
+                          productProivider.uploadProduct(
+                              context: context,
+                              category: categoryController.text,
+                              price: double.parse(priceController.text.trim()),
+                              description: descriptionController.text.trim(),
+                              quantity:
+                                  double.parse(quantityController.text.trim()),
+                              images: productProivider.imageState.data!,
+                              productName: nameController.text.trim());
+                        }
                       }
                     } else {
                       showSnakbar(context, "Image not added");

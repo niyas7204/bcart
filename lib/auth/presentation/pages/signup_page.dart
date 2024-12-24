@@ -57,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
     return PopScope(
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         authProvider.setUser = StateHandler.initial();
       },
       child: Scaffold(

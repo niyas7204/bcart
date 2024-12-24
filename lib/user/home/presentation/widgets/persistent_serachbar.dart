@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:flutter/material.dart';
 

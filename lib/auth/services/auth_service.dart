@@ -9,9 +9,6 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String baseUrl =
-    "https://4000-idx-shopsy-1727332260757.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev";
-
 class AuthService {
   static Future<Either<Failure, User>> userSignUp(
       {required String email,
@@ -21,7 +18,7 @@ class AuthService {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       log("email $email, name $name");
-      String url = "$baseUrl/api/user/signup";
+      String url = "$baseUrl/api/auth/signup";
       final response = await http.post(Uri.parse(url),
           body:
               jsonEncode({"email": email, "name": name, "password": password}),
@@ -52,13 +49,14 @@ class AuthService {
     try {
       final SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      final url = Uri.parse("$baseUrl/api/user/signin");
+      final url = Uri.parse("$baseUrl/api/auth/signin");
       final response = await http.post(url,
           body: jsonEncode({"email": email, "password": password}),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $bearedToken',
           });
+      log("Signin Failure =${response.body}");
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final String accessToken = jsonDecode(response.body)["Access-Token"];
         sharedPreferences.setString(ConstantKeys.accesToken, accessToken);

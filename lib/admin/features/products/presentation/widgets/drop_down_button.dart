@@ -1,24 +1,39 @@
+import 'dart:developer';
+
+import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryDropdown extends StatefulWidget {
   final TextEditingController categoryController;
-  const CategoryDropdown({super.key, required this.categoryController});
+
+  const CategoryDropdown({
+    super.key,
+    required this.categoryController,
+  });
 
   @override
   State<CategoryDropdown> createState() => _CategoryDropdownState();
 }
 
 class _CategoryDropdownState extends State<CategoryDropdown> {
-  String category = "One";
+  String? currentCategory;
   @override
   void initState() {
-    widget.categoryController.value = TextEditingValue(text: "One");
+    widget.categoryController.value = TextEditingValue(text: "");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final productProivider = Provider.of<ProductProvider>(context);
+    productProivider.addListener(
+      () {
+        log("get category status ${productProivider.catogerisState.status}.");
+      },
+    );
     final size = MediaQuery.of(context).size;
 
     return Column(
@@ -49,42 +64,26 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
             underline: const SizedBox(),
             focusColor: Colors.white,
             borderRadius: BorderRadius.circular(12),
-            value: category,
-            items: [
-              DropdownMenuItem(
-                value: "One",
-                child: const Text("One"),
-                onTap: () {
-                  setState(() {
-                    category = "One";
-                    widget.categoryController.value =
-                        TextEditingValue(text: "One");
-                  });
-                },
-              ),
-              DropdownMenuItem(
-                value: "Two",
-                onTap: () {
-                  setState(() {
-                    category = "Two";
-                    widget.categoryController.value =
-                        TextEditingValue(text: "Two");
-                  });
-                },
-                child: const Text("Two"),
-              ),
-              DropdownMenuItem(
-                value: "Three",
-                onTap: () {
-                  setState(() {
-                    category = "Three";
-                    widget.categoryController.value =
-                        TextEditingValue(text: "Three");
-                  });
-                },
-                child: const Text("Three"),
-              )
-            ],
+            value: currentCategory,
+            items:
+                productProivider.catogerisState.status == StateStatuse.success
+                    ? productProivider.catogerisState.data!.categories.map(
+                        (category) {
+                          log('category ${category.name}');
+                          return DropdownMenuItem(
+                            value: category.name,
+                            child: Text(category.name),
+                            onTap: () {
+                              setState(() {
+                                currentCategory = category.name;
+                                widget.categoryController.value =
+                                    TextEditingValue(text: category.name);
+                              });
+                            },
+                          );
+                        },
+                      ).toList()
+                    : [],
             onChanged: (value) {},
           ),
         ),

@@ -21,7 +21,7 @@ class _AuthFieldState extends State<AuthField> {
   @override
   void initState() {
     isObscure = widget.hintText == "Password";
-    // TODO: implement initState
+
     super.initState();
   }
 

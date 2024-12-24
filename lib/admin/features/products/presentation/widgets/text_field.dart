@@ -1,5 +1,4 @@
 import 'package:amazone_clone/core/contants/colors.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:flutter/material.dart';
 
 class ProductTextField extends StatefulWidget {
@@ -7,13 +6,13 @@ class ProductTextField extends StatefulWidget {
   final String hintText;
   final int maxLine;
   final double width;
-  final GlobalKey<FormState> formKey;
+  // final GlobalKey<FormState> formKey;
 
   const ProductTextField(
       {super.key,
       required this.controller,
       required this.hintText,
-      required this.formKey,
+      // required this.formKey,
       required this.maxLine,
       required this.width});
 
@@ -23,12 +22,6 @@ class ProductTextField extends StatefulWidget {
 
 class _ProductTextFieldState extends State<ProductTextField> {
   bool isObscure = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

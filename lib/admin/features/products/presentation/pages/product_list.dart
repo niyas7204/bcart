@@ -45,9 +45,9 @@ class _ProductListState extends State<ProductList> {
       //AppTheme.primeryColor6,
       body: Padding(
           padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: Builder(
-            builder: (context) {
-              switch (productState.status) {
+          child: Consumer<ProductProvider>(
+            builder: (context, themeProvider, child) {
+              switch (themeProvider.getproductState.status) {
                 case StateStatuse.loading:
                   return GridView.builder(
                       itemCount: 5,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:amazone_clone/admin/core/constants/url.dart';
+import 'package:amazone_clone/admin/features/products/models/category_model.dart';
 import 'package:amazone_clone/admin/features/products/models/products_model.dart';
 import 'package:amazone_clone/core/errors/error_handling.dart';
 import 'package:amazone_clone/core/helpers/response_handler.dart';
@@ -48,12 +49,15 @@ class AddProductService {
   }
 
   static Future<Either<Failure, ProductModel>> uploadProduct(
-      {required ProductModel product, required String accessToken}) async {
+      {required ProductModel product,
+      required String categoryName,
+      required String accessToken}) async {
     try {
       return handlerApiResponse<ProductModel>(
+        call: Method.post,
         accessToken: accessToken,
         body: jsonEncode(product.toJson()),
-        addHeader: null,
+        addHeader: MapEntry('product_category', categoryName),
         url: AdminUrls.addPrduct,
         successHandler: (p0) {
           return ProductModel.fromJson(p0["product"] as Map<String, dynamic>);
@@ -68,7 +72,8 @@ class AddProductService {
   static Future<Either<Failure, ProductsListModel>> getProduct(
       {required String accessToken}) async {
     try {
-      return handlerApiResponse<ProductsListModel>(
+      return await handlerApiResponse<ProductsListModel>(
+        call: Method.get,
         accessToken: accessToken,
         body: null,
         addHeader: null,
@@ -86,52 +91,52 @@ class AddProductService {
   static Future<Either<Failure, ProductModel>> deleteProduct(
       {required String accessToken, required String productId}) async {
     try {
-      return handlerApiResponse<ProductModel>(
-        accessToken: accessToken,
-        body: jsonEncode({"id": productId}),
-        addHeader: null,
-        url: AdminUrls.deleteProudct,
-        successHandler: (p0) {
-          return ProductModel.fromJson(p0["product"]);
-        },
-      );
+      return await handlerApiResponse<ProductModel>(
+          accessToken: accessToken,
+          body: jsonEncode({"id": productId}),
+          addHeader: null,
+          url: AdminUrls.deleteProudct,
+          successHandler: (p0) {
+            return ProductModel.fromJson(p0["product"]);
+          },
+          call: Method.post);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
     }
   }
 
-  static Future<Either<Failure, String>> getCategories({
+  static Future<Either<Failure, CategoriesModel>> getCategories({
     required String accessToken,
   }) async {
     try {
-      return handlerApiResponse<String>(
-        accessToken: accessToken,
-        body: null,
-        addHeader: null,
-        url: AdminUrls.getCategories,
-        successHandler: (p0) {
-          return "success";
-        },
-      );
+      return await handlerApiResponse<CategoriesModel>(
+          accessToken: accessToken,
+          body: null,
+          addHeader: null,
+          url: AdminUrls.getCategories,
+          successHandler: (p0) {
+            return categoriesModelFromJson(p0);
+          },
+          call: Method.get);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
     }
   }
 
-  static Future<Either<Failure, String>> createCategories(
+  static Future<Either<Failure, Category>> createCategories(
       {required String accessToken, required String category}) async {
     try {
-      return handlerApiResponse<String>(
-        accessToken: accessToken,
-        body: jsonEncode({"name": category}),
-        addHeader: null,
-        url: AdminUrls.createCategory,
-        successHandler: (p0) {
-          return "success";
-        },
-      );
+      return await handlerApiResponse<Category>(
+          accessToken: accessToken,
+          body: jsonEncode({"name": category}),
+          addHeader: null,
+          url: AdminUrls.createCategory,
+          successHandler: (p0) {
+            return Category.fromJson(p0["category"]);
+          },
+          call: Method.post);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
