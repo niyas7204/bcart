@@ -1,36 +1,34 @@
 // To parse this JSON data, do
 //
-//     final ProductsListModel = ProductsListModelFromJson(jsonString);
+//     final UserProductsListModel = UserProductsListModelFromJson(jsonString);
 
-import 'package:amazone_clone/admin/features/products/models/category_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
-part 'products_model.g.dart';
+part 'user_products_model.g.dart';
 
-ProductsListModel productsListModelFromJson(String str) =>
-    ProductsListModel.fromJson(json.decode(str));
+UserProductsListModel userProductsListModelFromJson(String str) =>
+    UserProductsListModel.fromJson(json.decode(str));
 
-String productsListModelToJson(ProductsListModel data) =>
+String userProductsListModelToJson(UserProductsListModel data) =>
     json.encode(data.toJson());
 
 @JsonSerializable()
-class ProductsListModel {
+class UserProductsListModel {
   @JsonKey(name: "products")
   List<ProductModel> products;
 
-  ProductsListModel({
+  UserProductsListModel({
     required this.products,
   });
 
-  factory ProductsListModel.fromJson(Map<String, dynamic> json) =>
-      _$ProductsListModelFromJson(json);
+  factory UserProductsListModel.fromJson(Map<String, dynamic> json) =>
+      _$UserProductsListModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProductsListModelToJson(this);
+  Map<String, dynamic> toJson() => _$UserProductsListModelToJson(this);
 
   @override
   String toString() {
-    // TODO: implement toString
     return 'ProductModel$products';
   }
 }
@@ -77,7 +75,48 @@ class ProductModel {
 
   @override
   String toString() {
-    // TODO: implement toString
     return ' {"name": "$name", "description": "$description", category:"$category", "price": "$price", "quantity": "$quantity", "images": "$images", "sellerId": "$sellerId", "productId": "$productId"}';
   }
+}
+
+CategoriesModel categoriesModelFromJson(String str) =>
+    CategoriesModel.fromJson(json.decode(str));
+
+String categoriesModelToJson(CategoriesModel data) =>
+    json.encode(data.toJson());
+
+@JsonSerializable()
+class CategoriesModel {
+  @JsonKey(name: "categories")
+  List<Category> categories;
+
+  CategoriesModel({
+    required this.categories,
+  });
+
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoriesModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CategoriesModelToJson(this);
+}
+
+@JsonSerializable()
+class Category {
+  @JsonKey(name: "_id")
+  String id;
+  @JsonKey(name: "name")
+  String name;
+  @JsonKey(name: "image")
+  String? image;
+
+  Category({
+    required this.id,
+    required this.name,
+    required this.image,
+  });
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }

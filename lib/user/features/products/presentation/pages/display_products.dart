@@ -2,7 +2,7 @@ import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/widgets/show_snackbar.dart';
+import '../../../../../core/widgets/show_snackbar.dart';
 
 class DisplayProducts extends StatefulWidget {
   final String tittle;

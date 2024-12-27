@@ -29,12 +29,12 @@ class ProductCard extends StatelessWidget {
                 image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                        productState.data!.products[index].images[0])),
+                        productState.data!.products[index].images![0])),
                 borderRadius: BorderRadius.circular(8)),
           ),
           WhiteSpaces.height5,
           Text(
-            productState.data!.products[index].name,
+            productState.data!.products[index].name!,
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

@@ -60,7 +60,7 @@ class AddProductService {
         addHeader: MapEntry('product_category', categoryName),
         url: AdminUrls.addPrduct,
         successHandler: (p0) {
-          return ProductModel.fromJson(p0["product"] as Map<String, dynamic>);
+          return productModelFromJson(p0);
         },
       );
     } catch (e) {
@@ -97,7 +97,12 @@ class AddProductService {
           addHeader: null,
           url: AdminUrls.deleteProudct,
           successHandler: (p0) {
-            return ProductModel.fromJson(p0["product"]);
+            try {
+              return productModelFromJson(p0);
+            } catch (e) {
+              log("delete======= error $e");
+              throw Exception(e);
+            }
           },
           call: Method.post);
     } catch (e) {

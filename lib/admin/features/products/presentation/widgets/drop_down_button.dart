@@ -30,9 +30,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   Widget build(BuildContext context) {
     final productProivider = Provider.of<ProductProvider>(context);
     productProivider.addListener(
-      () {
-        log("get category status ${productProivider.catogerisState.status}.");
-      },
+      () {},
     );
     final size = MediaQuery.of(context).size;
 
@@ -69,7 +67,6 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
                 productProivider.catogerisState.status == StateStatuse.success
                     ? productProivider.catogerisState.data!.categories.map(
                         (category) {
-                          log('category ${category.name}');
                           return DropdownMenuItem(
                             value: category.name,
                             child: Text(category.name),

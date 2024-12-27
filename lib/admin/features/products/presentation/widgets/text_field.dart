@@ -60,8 +60,9 @@ class _ProductTextFieldState extends State<ProductTextField> {
                 height: 70,
                 child: TextFormField(
                   clipBehavior: Clip.none,
-                  keyboardType: widget.hintText == "Email"
-                      ? TextInputType.emailAddress
+                  keyboardType: widget.hintText == "Price" ||
+                          widget.hintText == "Qauntity"
+                      ? TextInputType.number
                       : TextInputType.text,
                   obscureText: isObscure,
                   maxLines: widget.maxLine,

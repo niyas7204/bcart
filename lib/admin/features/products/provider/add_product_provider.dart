@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:amazone_clone/admin/features/products/models/category_model.dart';
 import 'package:amazone_clone/admin/features/products/models/products_model.dart';
+import 'package:amazone_clone/core/helpers/access_token.dart';
 import 'package:amazone_clone/core/widgets/show_alert.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/service/product_service.dart';
@@ -38,10 +39,6 @@ class ProductProvider extends ChangeNotifier {
   }
 
   set setGetProduct(StateHandler<ProductsListModel> products) {
-    if (products.status == StateStatuse.success) {
-      log("======== ${products.data!.toString()}");
-    }
-
     _getProduct = products;
 
     notifyListeners();
@@ -107,7 +104,8 @@ class ProductProvider extends ChangeNotifier {
                     productId: null));
             product.fold((l) => setProduct = StateHandler.error(l.errorMessage),
                 (r) async {
-              showSnakbar(context, "product added successfully");
+              log("product ${r.name} added successfully ");
+              showSnakbar(context, "product ${r.name} added successfully ");
               await getProduct();
               setImage = StateHandler.initial();
               setProduct = StateHandler.success(r);
@@ -199,11 +197,4 @@ class ProductProvider extends ChangeNotifier {
       setGetProduct = StateHandler.error("Failed to authenticate");
     }
   }
-}
-
-Future<String?> getAccessToken() async {
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  final accessToken = sharedPreferences.getString(ConstantKeys.accesToken);
-  return accessToken;
 }

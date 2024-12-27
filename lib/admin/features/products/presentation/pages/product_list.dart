@@ -36,9 +36,7 @@ class _ProductListState extends State<ProductList> {
     final productProivider = Provider.of<ProductProvider>(context);
     final productState = productProivider.getproductState;
     productProivider.addListener(
-      () {
-        log("======= ${productProivider.getproductState.status}");
-      },
+      () {},
     );
     return Scaffold(
       backgroundColor: Color(0xFFEEEEEE),

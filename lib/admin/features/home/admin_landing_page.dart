@@ -1,6 +1,6 @@
 import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
- import 'package:amazone_clone/user/home/presentation/pages/home_page.dart';
+import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AdminLandingPage extends StatefulWidget {

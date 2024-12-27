@@ -4,7 +4,7 @@ import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:amazone_clone/auth/presentation/widgets/auth_button.dart';
 import 'package:amazone_clone/auth/presentation/widgets/auth_textfield.dart';
-import 'package:amazone_clone/user/home/presentation/pages/home_page.dart';
+import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

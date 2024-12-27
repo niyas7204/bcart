@@ -3,6 +3,9 @@ import 'package:amazone_clone/admin/features/products/provider/add_product_provi
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
 import 'package:amazone_clone/core/contants/key.dart';
+import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
+import 'package:amazone_clone/user/features/home/providers/home_page_product_provider.dart';
+import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +23,12 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomePageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProductsProvider(),
         )
       ],
       child: MyApp(
@@ -39,7 +48,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: token != null ? AdminLandingPage() : const LoginPage(),
+      home: token != null ? HomePage() : const LoginPage(),
     );
   }
 }

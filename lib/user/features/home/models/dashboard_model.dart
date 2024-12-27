@@ -1,11 +1,40 @@
 // To parse this JSON data, do
 //
-//     final categoriesModel = categoriesModelFromJson(jsonString);
+//     final dashboardModel = dashboardModelFromJson(jsonString);
 
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
-part 'category_model.g.dart';
+part 'dashboard_model.g.dart';
+
+DashboardModel dashboardModelFromJson(String str) =>
+    DashboardModel.fromJson(json.decode(str));
+
+String dashboardModelToJson(DashboardModel data) => json.encode(data.toJson());
+
+@JsonSerializable()
+class DashboardModel {
+  @JsonKey(name: "message")
+  String message;
+  @JsonKey(name: "categories")
+  List<Category> categories;
+  @JsonKey(name: "topMoving")
+  List<dynamic> topMoving;
+
+  DashboardModel({
+    required this.message,
+    required this.categories,
+    required this.topMoving,
+  });
+
+  factory DashboardModel.fromJson(Map<String, dynamic> json) =>
+      _$DashboardModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DashboardModelToJson(this);
+}
+// To parse this JSON data, do
+//
+//     final categoriesModel = categoriesModelFromJson(jsonString);
 
 CategoriesModel categoriesModelFromJson(String str) =>
     CategoriesModel.fromJson(json.decode(str));
@@ -34,10 +63,13 @@ class Category {
   String id;
   @JsonKey(name: "name")
   String name;
+  @JsonKey(name: "image")
+  String? image;
 
   Category({
     required this.id,
     required this.name,
+    required this.image,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>

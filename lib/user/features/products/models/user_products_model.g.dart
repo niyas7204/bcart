@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'products_model.dart';
+part of 'user_products_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductsListModel _$ProductsListModelFromJson(Map<String, dynamic> json) =>
-    ProductsListModel(
+UserProductsListModel _$UserProductsListModelFromJson(
+        Map<String, dynamic> json) =>
+    UserProductsListModel(
       products: (json['products'] as List<dynamic>)
           .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ProductsListModelToJson(ProductsListModel instance) =>
+Map<String, dynamic> _$UserProductsListModelToJson(
+        UserProductsListModel instance) =>
     <String, dynamic>{
       'products': instance.products,
     };
@@ -42,4 +44,28 @@ Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
       'images': instance.images,
       'sellerId': instance.sellerId,
       '_id': instance.productId,
+    };
+
+CategoriesModel _$CategoriesModelFromJson(Map<String, dynamic> json) =>
+    CategoriesModel(
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$CategoriesModelToJson(CategoriesModel instance) =>
+    <String, dynamic>{
+      'categories': instance.categories,
+    };
+
+Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
+      id: json['_id'] as String,
+      name: json['name'] as String,
+      image: json['image'] as String?,
+    );
+
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+      '_id': instance.id,
+      'name': instance.name,
+      'image': instance.image,
     };
