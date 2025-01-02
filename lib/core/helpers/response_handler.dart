@@ -14,17 +14,15 @@ Future<Either<Failure, T>> handlerApiResponse<T>(
     required MapEntry<String, String>? addHeader,
     required T Function(dynamic) successHandler}) async {
   try {
-    log("############# 1");
     Map<String, String> header = {
       'Access-Token': accessToken,
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $bearerToken',
     };
-    log("############# 2");
+
     if (addHeader != null) {
       header[addHeader.key] = addHeader.value;
     }
-    log("############# 3");
 
     Response? response;
     if (call == Method.get) {
@@ -34,14 +32,13 @@ Future<Either<Failure, T>> handlerApiResponse<T>(
           body: body, headers: header);
     }
 
-    log("############# 4");
     if (response!.statusCode >= 200 && response.statusCode < 300) {
-      log("endpoind $url response ${response.body}");
+      log("endpoind $url status ${response.statusCode} response ${response.body}");
 
       final result = successHandler(response.body);
       return right(result);
     } else {
-      log("failure on url $url #response${response.body}");
+      log("failure on url $url status ${response.statusCode}  #response${response.body}");
       final result = jsonDecode(response.body);
 
       return left(Failure(errorMessage: result["error"]));

@@ -1,9 +1,7 @@
 import 'dart:developer';
 
-import 'package:amazone_clone/admin/features/products/presentation/widgets/product_card.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:amazone_clone/user/features/products/presentation/widgets/products_card.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +9,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../../../../../core/widgets/show_snackbar.dart';
 
 class DisplayProducts extends StatefulWidget {
   final String tittle;

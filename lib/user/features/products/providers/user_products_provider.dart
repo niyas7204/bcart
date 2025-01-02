@@ -66,4 +66,19 @@ class UserProductsProvider extends ChangeNotifier {
       setProduct = StateHandler.error("Failed to authenticate");
     }
   }
+
+  Future<void> addToCart(
+      {required String producId, required int itemCount}) async {
+    try {
+      final String? accessToken = await getAccessToken();
+      if (accessToken != null) {
+        final product = await UserProductService.addToCart(
+            productId: producId,
+            itemCount: itemCount,
+            accessToken: accessToken);
+      }
+    } catch (e) {
+      log("=error $e");
+    }
+  }
 }

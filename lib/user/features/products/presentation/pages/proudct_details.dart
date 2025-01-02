@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:amazone_clone/user/features/products/models/user_products_model.dart';
+import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProudctDetails extends StatefulWidget {
   final ProductModel product;
@@ -15,6 +19,10 @@ class ProudctDetails extends StatefulWidget {
 class _ProudctDetailsState extends State<ProudctDetails> {
   @override
   Widget build(BuildContext context) {
+    UserProductsProvider userProductsProvider =
+        Provider.of<UserProductsProvider>(
+      context,
+    );
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -71,19 +79,26 @@ class _ProudctDetailsState extends State<ProudctDetails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      color: AppTheme.primeryColor3,
-                      height: 60,
-                      width: (size.width - 30) / 2,
-                      child: Center(
-                        child: Text(
-                          "Add To Cart",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff113946)
-                              //AppTheme.primeryColor4
-                              ),
+                    GestureDetector(
+                      onTap: () {
+                        log("add to cart ");
+                        userProductsProvider.addToCart(
+                            producId: widget.product.productId!, itemCount: 2);
+                      },
+                      child: Container(
+                        color: AppTheme.primeryColor3,
+                        height: 60,
+                        width: (size.width - 30) / 2,
+                        child: Center(
+                          child: Text(
+                            "Add To Cart",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xff113946)
+                                //AppTheme.primeryColor4
+                                ),
+                          ),
                         ),
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:amazone_clone/core/errors/error_handling.dart';
@@ -22,6 +23,25 @@ class UserProductService {
         successHandler: (p0) {
           return userProductsListModelFromJson(p0);
         },
+      );
+    } catch (e) {
+      log("error===========$e");
+      throw Exception();
+    }
+  }
+
+  static Future<Either<Failure, void>> addToCart(
+      {required String productId,
+      required int itemCount,
+      required String accessToken}) async {
+    try {
+      return await handlerApiResponse(
+        accessToken: accessToken,
+        url: UserUrls.addToCart,
+        body: jsonEncode({"productId": productId, "quantity": itemCount}),
+        call: Method.post,
+        addHeader: null,
+        successHandler: (p0) {},
       );
     } catch (e) {
       log("error===========$e");
