@@ -39,15 +39,14 @@ class _CategoryListState extends State<CategoryList> {
               separatorBuilder: (context, index) => WhiteSpaces.width10,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  userProductsProvider.getProducts(
-                      query: 'f',
-                      category: homePageProvider
-                          .dashboardState.data!.categories[index].id);
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => DisplayProducts(
-                  //       tittle: homePageProvider
-                  //           .dashboardState.data!.categories[index].name),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DisplayProducts(
+                      tittle: homePageProvider
+                          .dashboardState.data!.categories[index].name,
+                      categoryId: homePageProvider
+                          .dashboardState.data!.categories[index].id,
+                    ),
+                  ));
                 },
                 child: Column(
                   children: [

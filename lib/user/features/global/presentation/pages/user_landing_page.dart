@@ -1,5 +1,6 @@
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
+import 'package:amazone_clone/user/features/products/presentation/pages/display_products.dart';
 import 'package:amazone_clone/user/profile/presentation/pages/pofile.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,10 @@ class _LandingPageState extends State<LandingPage> {
 
   List<Widget> pages = [
     HomePage(),
+    DisplayProducts(
+      tittle: "Products",
+      categoryId: null,
+    ),
     HomePage(),
     UserProfile(),
   ];
@@ -26,6 +31,7 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppTheme.primeryColor6,
@@ -80,21 +86,22 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.shopping_bag_outlined,
+                      Icons.shopify_sharp,
                       size: 35,
                       color: currentIndex == 1
                           ? AppTheme.primeryColor5
                           : AppTheme.primeryColor5.withOpacity(.5),
                     ),
                     Text(
-                      "Cart",
+                      "explore",
                       style: TextStyle(
-                          color: currentIndex == 1
-                              ? AppTheme.primeryColor5
-                              : AppTheme.primeryColor5.withOpacity(.5),
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          height: 0),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        height: 0,
+                        color: currentIndex == 1
+                            ? AppTheme.primeryColor5
+                            : AppTheme.primeryColor5.withOpacity(.5),
+                      ),
                     )
                   ],
                 ),
@@ -107,16 +114,43 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.person_2_outlined,
+                      Icons.shopping_bag_outlined,
                       size: 35,
                       color: currentIndex == 2
                           ? AppTheme.primeryColor5
                           : AppTheme.primeryColor5.withOpacity(.5),
                     ),
                     Text(
-                      "Account",
+                      "Cart",
                       style: TextStyle(
                           color: currentIndex == 2
+                              ? AppTheme.primeryColor5
+                              : AppTheme.primeryColor5.withOpacity(.5),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          height: 0),
+                    )
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  updatePage(3);
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.person_2_outlined,
+                      size: 35,
+                      color: currentIndex == 3
+                          ? AppTheme.primeryColor5
+                          : AppTheme.primeryColor5.withOpacity(.5),
+                    ),
+                    Text(
+                      "Account",
+                      style: TextStyle(
+                          color: currentIndex == 3
                               ? AppTheme.primeryColor5
                               : AppTheme.primeryColor5.withOpacity(.5),
                           fontSize: 14,

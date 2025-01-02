@@ -26,10 +26,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        HomePageProvider productProvider =
+        HomePageProvider homepageProvider =
             Provider.of<HomePageProvider>(context, listen: false);
-
-        productProvider.getDashboard();
+        if (homepageProvider.dashboardState.status != StateStatuse.success) {
+          homepageProvider.getDashboard();
+        }
       },
     );
     super.initState();

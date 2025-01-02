@@ -14,7 +14,8 @@ class UserProductService {
     try {
       return await handlerApiResponse(
         accessToken: accessToken,
-        url: "${UserUrls.getProudct}?name=$query&category=$category",
+        url:
+            "${UserUrls.getProudct}?${query != null ? 'name=$query&' : ''}${category != null ? 'category=$category' : ''}",
         body: null,
         call: Method.get,
         addHeader: null,

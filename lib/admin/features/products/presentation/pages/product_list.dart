@@ -33,19 +33,16 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final productProivider = Provider.of<ProductProvider>(context);
-    final productState = productProivider.getproductState;
-    productProivider.addListener(
-      () {},
-    );
+
     return Scaffold(
       backgroundColor: Color(0xFFEEEEEE),
       //AppTheme.primeryColor6,
       body: Padding(
           padding: EdgeInsets.only(left: 15, right: 15, top: 15),
           child: Consumer<ProductProvider>(
-            builder: (context, themeProvider, child) {
-              switch (themeProvider.getproductState.status) {
+            builder: (context, productProvider, child) {
+              final productState = productProvider.getproductState;
+              switch (productProvider.getproductState.status) {
                 case StateStatuse.loading:
                   return GridView.builder(
                       itemCount: 5,
@@ -75,7 +72,7 @@ class _ProductListState extends State<ProductList> {
                           itemBuilder: (context, index) => ProductCard(
                               index: index,
                               productState: productState,
-                              productProivider: productProivider),
+                              productProivider: productProvider),
                         )
                       : Center(
                           child: Stack(
