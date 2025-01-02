@@ -8,9 +8,11 @@ import 'package:flutter/cupertino.dart';
 
 class UserProductsProvider extends ChangeNotifier {
   StateHandler<UserProductsListModel> _products = StateHandler.initial();
+  StateHandler<UserProductsListModel> _searchProducts = StateHandler.initial();
   StateHandler<UserProductsListModel> _productsbyCategory =
       StateHandler.initial();
   StateHandler<UserProductsListModel> get allprodctsState => _products;
+  StateHandler<UserProductsListModel> get searchProdctsState => _searchProducts;
   StateHandler<UserProductsListModel> get productByCategoryState =>
       _productsbyCategory;
 
@@ -24,25 +26,36 @@ class UserProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set setSearchProduct(StateHandler<UserProductsListModel> newProducts) {
+    _searchProducts = newProducts;
+    notifyListeners();
+  }
+
   Future<void> getProducts(
       {required String? query, required String? category}) async {
     final String? accessToken = await getAccessToken();
     if (accessToken != null) {
       log("===========1 $category ");
-      category != null
-          ? setProductbyCategory = StateHandler.loading()
-          : setProduct = StateHandler.loading();
+      query != null
+          ? setSearchProduct = StateHandler.loading()
+          : category != null
+              ? setProductbyCategory = StateHandler.loading()
+              : setProduct = StateHandler.loading();
       final product = await UserProductService.getProducts(
           query: query, category: category, accessToken: accessToken);
 
       product.fold((l) {
-        if (category != null) {
+        if (query != null) {
+          setSearchProduct = StateHandler.error(l.errorMessage);
+        } else if (category != null) {
           setProductbyCategory = StateHandler.error(l.errorMessage);
         } else {
           setProduct = StateHandler.error(l.errorMessage);
         }
       }, (r) {
-        if (category != null) {
+        if (query != null) {
+          setSearchProduct = StateHandler.success(r);
+        } else if (category != null) {
           setProductbyCategory = StateHandler.success(r);
         } else {
           setProduct = StateHandler.success(r);

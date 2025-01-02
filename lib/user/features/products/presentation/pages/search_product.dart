@@ -1,9 +1,6 @@
-import 'dart:developer';
-
-import 'package:amazone_clone/admin/features/products/presentation/widgets/product_card.dart';
 import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/core/helpers/debouncer.dart';
 import 'package:amazone_clone/user/features/products/presentation/widgets/products_card.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,53 +9,81 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../../core/widgets/show_snackbar.dart';
-
-class DisplayProducts extends StatefulWidget {
-  final String tittle;
-  final String? categoryId;
-  const DisplayProducts(
-      {super.key, required this.tittle, required this.categoryId});
+class SearchProduct extends StatefulWidget {
+  const SearchProduct({super.key});
 
   @override
-  State<DisplayProducts> createState() => _DisplayProductsState();
+  State<SearchProduct> createState() => _SearchProductState();
 }
 
-class _DisplayProductsState extends State<DisplayProducts> {
+class _SearchProductState extends State<SearchProduct> {
+  final debouncer = Debouncer(milliseconds: 2000);
   @override
   void initState() {
     UserProductsProvider userProductsProvider =
         Provider.of<UserProductsProvider>(context, listen: false);
-    if (widget.categoryId != null) {
-      log('init id not null');
-      userProductsProvider.getProducts(
-          query: null, category: widget.categoryId);
-    } else {
-      log('init id  null');
-      userProductsProvider.allprodctsState.status != StateStatuse.success
-          ? userProductsProvider.getProducts(query: null, category: null)
-          : null;
-    }
-
+    userProductsProvider.getProducts(query: "", category: null);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    UserProductsProvider userProductsProvider =
+        Provider.of<UserProductsProvider>(
+      context,
+    );
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
+
+    return Scaffold(
+        backgroundColor: AppTheme.primeryColor2,
         appBar: AppBar(
-          centerTitle: true,
-          title: Text(widget.tittle),
-        ),
+            leadingWidth: 30,
+            backgroundColor: AppTheme.primeryColor2,
+            title: Container(
+              width: size.width,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppTheme.primeryColor5,
+                        blurRadius: 3,
+                        spreadRadius: 5,
+                        blurStyle: BlurStyle.outer)
+                  ],
+                  color: AppTheme.primeryColor2,
+                  borderRadius: BorderRadius.circular(12)),
+              height: 40,
+              child: Center(
+                child: TextField(
+                  focusNode: FocusNode(),
+                  onChanged: (value) {
+                    debouncer.run(
+                      () {
+                        userProductsProvider.getProducts(
+                            query: value, category: null);
+                      },
+                    );
+                  },
+                  keyboardType: TextInputType.name,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
+                  ),
+                  clipBehavior: Clip.none,
+                  cursorErrorColor: AppTheme.primeryColor5,
+                  cursorColor: AppTheme.primeryColor5,
+                  decoration: const InputDecoration(
+                    hintText: "search",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            )),
         body: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(12),
             child: Consumer<UserProductsProvider>(
               builder: (context, productProvider, child) {
-                final productState = widget.categoryId != null
-                    ? productProvider.productByCategoryState
-                    : productProvider.allprodctsState;
+                final productState = productProvider.searchProdctsState;
                 switch (productState.status) {
                   case StateStatuse.loading:
                     return GridView.builder(
@@ -141,8 +166,6 @@ class _DisplayProductsState extends State<DisplayProducts> {
                     return SizedBox();
                 }
               },
-            )),
-      ),
-    );
+            )));
   }
 }

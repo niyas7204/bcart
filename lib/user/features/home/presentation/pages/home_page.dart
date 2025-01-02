@@ -5,6 +5,7 @@ import 'package:amazone_clone/core/contants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/user/core/page_routes.dart';
 import 'package:amazone_clone/user/features/home/presentation/widgets/category_list.dart';
 import 'package:amazone_clone/user/features/home/presentation/widgets/top_moving.dart';
 import 'package:amazone_clone/user/features/home/providers/home_page_product_provider.dart';
@@ -64,19 +65,25 @@ class _HomePageState extends State<HomePage> {
                         expandedTitleScale: 1,
                         collapseMode: CollapseMode.pin,
                         centerTitle: true,
-                        title: Container(
-                          height: 50,
-                          margin: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AppTheme.primeryColor5,
-                                    blurRadius: 3,
-                                    blurStyle: BlurStyle.outer)
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12)),
-                          width: size.width - 20,
+                        title: GestureDetector(
+                          onTap: () {
+                            log("on tap");
+                            Navigator.push(context, searchPageRoute());
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AppTheme.primeryColor5,
+                                      blurRadius: 3,
+                                      blurStyle: BlurStyle.outer)
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12)),
+                            width: size.width - 20,
+                          ),
                         ),
                         background: Container(
                           color: AppTheme.primeryColor2,

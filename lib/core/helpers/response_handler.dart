@@ -18,7 +18,7 @@ Future<Either<Failure, T>> handlerApiResponse<T>(
     Map<String, String> header = {
       'Access-Token': accessToken,
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearedToken',
+      'Authorization': 'Bearer $bearerToken',
     };
     log("############# 2");
     if (addHeader != null) {

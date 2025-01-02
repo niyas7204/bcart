@@ -11,11 +11,11 @@ class UserProductCard extends StatelessWidget {
     super.key,
     required this.index,
     required this.productState,
-    required this.productProivider,
+    required this.productProvider,
   });
   final int index;
   final StateHandler<UserProductsListModel> productState;
-  final UserProductsProvider productProivider;
+  final UserProductsProvider productProvider;
 
   @override
   Widget build(BuildContext context) {

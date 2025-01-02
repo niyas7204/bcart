@@ -24,7 +24,7 @@ class AuthService {
               jsonEncode({"email": email, "name": name, "password": password}),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer $bearedToken',
+            'Authorization': 'Bearer $bearerToken',
           });
       log("======= status ${response.statusCode} data ${response.body}");
       if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -54,7 +54,7 @@ class AuthService {
           body: jsonEncode({"email": email, "password": password}),
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer $bearedToken',
+            'Authorization': 'Bearer $bearerToken',
           });
       log("Signin Failure =${response.body}");
       if (response.statusCode >= 200 && response.statusCode < 300) {
