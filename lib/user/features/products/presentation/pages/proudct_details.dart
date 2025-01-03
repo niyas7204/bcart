@@ -81,9 +81,9 @@ class _ProudctDetailsState extends State<ProudctDetails> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        log("add to cart ");
+                        log("add to cart  ${widget.product.productId!}");
                         userProductsProvider.addToCart(
-                            producId: widget.product.productId!, itemCount: 2);
+                            producId: widget.product.productId!, itemCount: 1);
                       },
                       child: Container(
                         color: AppTheme.primeryColor3,
