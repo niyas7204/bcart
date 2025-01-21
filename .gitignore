@@ -44,4 +44,4 @@ app.*.map.json
 
 
 
-lib/core/contants/token.dart
+lib/core/constants/token.dart
