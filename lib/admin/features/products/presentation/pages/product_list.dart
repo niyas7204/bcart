@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:amazone_clone/admin/features/products/presentation/pages/add_product.dart';
 import 'package:amazone_clone/admin/features/products/presentation/widgets/product_card.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

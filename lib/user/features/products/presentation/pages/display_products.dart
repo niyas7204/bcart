@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
+import 'package:amazone_clone/user/core/page_routes.dart';
 import 'package:amazone_clone/user/features/products/presentation/widgets/products_card.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,6 @@ class _DisplayProductsState extends State<DisplayProducts> {
     UserProductsProvider userProductsProvider =
         Provider.of<UserProductsProvider>(context, listen: false);
     if (widget.categoryId != null) {
-      log('init id not null');
       userProductsProvider.getProducts(
           query: null, category: widget.categoryId);
     } else {
@@ -47,14 +47,26 @@ class _DisplayProductsState extends State<DisplayProducts> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(widget.tittle),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, searchPageRoute());
+                },
+                child: Icon(
+                  Icons.search_rounded,
+                  size: 30,
+                ),
+              ),
+            )
+          ],
         ),
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: Consumer<UserProductsProvider>(
               builder: (context, productProvider, child) {
-                final productState = widget.categoryId != null
-                    ? productProvider.productByCategoryState
-                    : productProvider.allprodctsState;
+                final productState = productProvider.allprodctsState;
                 switch (productState.status) {
                   case StateStatuse.loading:
                     return GridView.builder(

@@ -1,4 +1,4 @@
-import 'package:amazone_clone/core/contants/key.dart';
+import 'package:amazone_clone/core/constants/key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> getAccessToken() async {

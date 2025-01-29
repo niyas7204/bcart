@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:amazone_clone/auth/presentation/pages/signup_page.dart';

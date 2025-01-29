@@ -19,7 +19,7 @@ class HomePageServices {
           successHandler: (p0) {
             return dashboardModelFromJson(p0);
           },
-          call: Method.get);
+          method: Method.get);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));

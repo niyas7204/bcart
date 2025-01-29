@@ -1,4 +1,4 @@
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthField extends StatefulWidget {

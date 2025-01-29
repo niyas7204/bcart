@@ -54,7 +54,7 @@ class AddProductService {
       required String accessToken}) async {
     try {
       return handlerApiResponse<ProductModel>(
-        call: Method.post,
+        method: Method.post,
         accessToken: accessToken,
         body: jsonEncode(product.toJson()),
         addHeader: MapEntry('product_category', categoryName),
@@ -73,7 +73,7 @@ class AddProductService {
       {required String accessToken}) async {
     try {
       return await handlerApiResponse<ProductsListModel>(
-        call: Method.get,
+        method: Method.get,
         accessToken: accessToken,
         body: null,
         addHeader: null,
@@ -104,7 +104,7 @@ class AddProductService {
               throw Exception(e);
             }
           },
-          call: Method.post);
+          method: Method.post);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
@@ -123,7 +123,7 @@ class AddProductService {
           successHandler: (p0) {
             return categoriesModelFromJson(p0);
           },
-          call: Method.get);
+          method: Method.get);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));
@@ -141,7 +141,7 @@ class AddProductService {
           successHandler: (p0) {
             return Category.fromJson(p0["category"]);
           },
-          call: Method.post);
+          method: Method.post);
     } catch (e) {
       log("product delete error $e");
       return left(Failure(errorMessage: "Failed to upload product"));

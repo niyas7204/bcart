@@ -5,7 +5,7 @@ import 'package:amazone_clone/admin/features/products/presentation/widgets/drop_
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/presentation/widgets/text_field.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
 import 'package:flutter/material.dart';

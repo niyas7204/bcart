@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/user/features/cart/provider/cart_provider.dart';
 import 'package:amazone_clone/user/features/products/models/user_products_model.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 import 'package:flutter/material.dart';
@@ -81,9 +82,13 @@ class _ProudctDetailsState extends State<ProudctDetails> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        log("add to cart  ${widget.product.productId!}");
-                        userProductsProvider.addToCart(
+                        CartProvider cartProvider =
+                            Provider.of<CartProvider>(context, listen: false);
+                        cartProvider.addToCart(
                             producId: widget.product.productId!, itemCount: 1);
+                        // log("add to cart  ${widget.product.productId!}");
+                        // userProductsProvider.addToCart(
+                        //    ;
                       },
                       child: Container(
                         color: AppTheme.primeryColor3,

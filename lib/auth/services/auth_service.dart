@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:amazone_clone/auth/model/user_model.dart';
-import 'package:amazone_clone/core/contants/key.dart';
-import 'package:amazone_clone/core/contants/token.dart';
+import 'package:amazone_clone/core/constants/key.dart';
+import 'package:amazone_clone/core/constants/token.dart';
 import 'package:amazone_clone/core/errors/error_handling.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;

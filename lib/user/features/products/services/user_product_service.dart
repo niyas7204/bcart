@@ -18,7 +18,7 @@ class UserProductService {
         url:
             "${UserUrls.getProudct}?${query != null ? 'name=$query&' : ''}${category != null ? 'category=$category' : ''}",
         body: null,
-        call: Method.get,
+        method: Method.get,
         addHeader: null,
         successHandler: (p0) {
           return userProductsListModelFromJson(p0);
@@ -35,11 +35,12 @@ class UserProductService {
       required int itemCount,
       required String accessToken}) async {
     try {
+      log("======= addd id $productId");
       return await handlerApiResponse(
         accessToken: accessToken,
         url: UserUrls.addToCart,
         body: jsonEncode({"productId": productId, "quantity": itemCount}),
-        call: Method.post,
+        method: Method.post,
         addHeader: null,
         successHandler: (p0) {},
       );

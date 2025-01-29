@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:amazone_clone/core/contants/token.dart';
+import 'package:amazone_clone/core/constants/token.dart';
 import 'package:amazone_clone/core/errors/error_handling.dart';
 import 'package:dartz/dartz.dart';
-import 'package:http/http.dart';
 
 Future<Either<Failure, T>> handlerApiResponse<T>(
     {required String accessToken,
     required String url,
     required String? body,
-    required Method call,
+    required Method method,
     required MapEntry<String, String>? addHeader,
     required T Function(dynamic) successHandler}) async {
   try {
@@ -24,16 +23,31 @@ Future<Either<Failure, T>> handlerApiResponse<T>(
       header[addHeader.key] = addHeader.value;
     }
 
-    Response? response;
-    if (call == Method.get) {
-      response = await http.get(Uri.parse('$baseUrl$url'), headers: header);
-    } else if (call == Method.post) {
-      response = await http.post(Uri.parse('$baseUrl$url'),
-          body: body, headers: header);
+    http.Response? response;
+    switch (method) {
+      case Method.get:
+        response = await http.get(Uri.parse('$baseUrl$url'), headers: header);
+        break;
+      case Method.post:
+        response = await http.post(Uri.parse('$baseUrl$url'),
+            headers: header, body: body);
+        break;
+      case Method.put:
+        response = await http.put(Uri.parse('$baseUrl$url'),
+            headers: header, body: body);
+        break;
+      case Method.patch:
+        response = await http.patch(Uri.parse('$baseUrl$url'),
+            headers: header, body: body);
+        break;
+      case Method.delete:
+        response = await http.delete(Uri.parse('$baseUrl$url'),
+            headers: header, body: body);
+        break;
     }
 
-    if (response!.statusCode >= 200 && response.statusCode < 300) {
-      log("endpoind $url status ${response.statusCode} response ${response.body}");
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      // log("endpoind $url status ${response.statusCode} response ${response.body}");
 
       final result = successHandler(response.body);
       return right(result);
@@ -49,7 +63,4 @@ Future<Either<Failure, T>> handlerApiResponse<T>(
   }
 }
 
-enum Method {
-  get,
-  post,
-}
+enum Method { get, post, put, delete, patch }

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/core/widgets/sized_boxes.dart';

@@ -1,4 +1,6 @@
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'dart:developer';
+
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/helpers/debouncer.dart';
 import 'package:amazone_clone/user/features/products/presentation/widgets/products_card.dart';
@@ -22,8 +24,18 @@ class _SearchProductState extends State<SearchProduct> {
   void initState() {
     UserProductsProvider userProductsProvider =
         Provider.of<UserProductsProvider>(context, listen: false);
-    userProductsProvider.getProducts(query: "", category: null);
+    userProductsProvider.allprodctsState.status != StateStatuse.success
+        ? userProductsProvider.getProducts(query: "", category: null)
+        : null;
     super.initState();
+  }
+
+  @override
+  void deactivate() {
+    UserProductsProvider userProductsProvider =
+        Provider.of<UserProductsProvider>(context, listen: false);
+    userProductsProvider.getProducts(query: "", category: null);
+    super.deactivate();
   }
 
   @override
@@ -83,7 +95,7 @@ class _SearchProductState extends State<SearchProduct> {
             padding: EdgeInsets.all(12),
             child: Consumer<UserProductsProvider>(
               builder: (context, productProvider, child) {
-                final productState = productProvider.searchProdctsState;
+                final productState = productProvider.allprodctsState;
                 switch (productState.status) {
                   case StateStatuse.loading:
                     return GridView.builder(

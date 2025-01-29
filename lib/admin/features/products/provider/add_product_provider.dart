@@ -7,7 +7,7 @@ import 'package:amazone_clone/core/helpers/access_token.dart';
 import 'package:amazone_clone/core/widgets/show_alert.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
 import 'package:amazone_clone/admin/features/products/service/product_service.dart';
-import 'package:amazone_clone/core/contants/key.dart';
+import 'package:amazone_clone/core/constants/key.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/cupertino.dart';
 

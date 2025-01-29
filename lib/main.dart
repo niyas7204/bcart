@@ -1,10 +1,9 @@
-import 'package:amazone_clone/admin/features/home/admin_landing_page.dart';
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
 import 'package:amazone_clone/auth/provider/user_provider.dart';
-import 'package:amazone_clone/core/contants/key.dart';
+import 'package:amazone_clone/core/constants/key.dart';
+import 'package:amazone_clone/user/features/cart/provider/cart_provider.dart';
 import 'package:amazone_clone/user/features/global/presentation/pages/user_landing_page.dart';
-import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:amazone_clone/user/features/home/providers/home_page_product_provider.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';
 
@@ -21,6 +20,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => ProductProvider(),

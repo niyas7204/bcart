@@ -1,7 +1,7 @@
-import 'package:amazone_clone/core/contants/colors.dart';
+import 'package:amazone_clone/core/constants/colors.dart';
 import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:amazone_clone/user/features/products/presentation/pages/display_products.dart';
-import 'package:amazone_clone/user/profile/presentation/pages/pofile.dart';
+import 'package:amazone_clone/user/features/profile/presentation/pages/pofile.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
