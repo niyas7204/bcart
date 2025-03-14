@@ -1,58 +1,64 @@
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
+import 'package:amazone_clone/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AuthField extends StatefulWidget {
   final TextEditingController controller;
-  final String hintText;
+
   final GlobalKey<FormState> formKey;
 
-  const AuthField(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      required this.formKey});
+  const AuthField({super.key, required this.controller, required this.formKey});
 
   @override
   State<AuthField> createState() => _AuthFieldState();
 }
 
 class _AuthFieldState extends State<AuthField> {
-  bool isObscure = false;
-  @override
-  void initState() {
-    isObscure = widget.hintText == "Password";
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width,
+    return Form(
+      key: widget.formKey,
       child: TextFormField(
-        keyboardType: widget.hintText == "Email"
-            ? TextInputType.emailAddress
-            : TextInputType.text,
-        obscureText: isObscure,
-        cursorErrorColor: AppTheme.primeryColor5,
-        cursorColor: AppTheme.primeryColor5,
+        keyboardType: TextInputType.number,
+        cursorColor: AppTheme.primeryColor1,
+        cursorErrorColor: AppTheme.primeryColor1,
+        controller: widget.controller,
+        style: AppTextStyle.inputTextStyle,
+        decoration: InputDecoration(
+          errorStyle: GoogleFonts.redHatText(
+            color: Colors.red.withValues(alpha: .7),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+          filled: true,
+          fillColor: Colors.grey.withValues(alpha: .2),
+          border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(
+                10,
+              )),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "+91",
+              style: AppTextStyle.hintTextStyle,
+            ),
+          ),
+          hintText: "Enter Mobile Number",
+          prefixIconConstraints: BoxConstraints(maxHeight: 44, maxWidth: 60),
+          hintStyle: AppTextStyle.hintTextStyle,
+        ),
         validator: (value) {
-          if (value!.isEmpty) {
-            return "${widget.hintText} is missing";
+          if (value == null || value.isEmpty) {
+            return "Please enter your Mobile Number";
+          } else if (value.length != 10 ||
+              !RegExp(r'^[0-9]+$').hasMatch(value)) {
+            return 'Enter a valid Mobile Number';
           }
           return null;
         },
-        controller: widget.controller,
-        decoration: const InputDecoration(
-            errorStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-            border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                )),
-            fillColor: Color(0xFFeaeded),
-            filled: true),
       ),
     );
   }

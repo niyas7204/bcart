@@ -1,4 +1,4 @@
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:amazone_clone/user/features/products/presentation/pages/display_products.dart';
 import 'package:amazone_clone/user/features/profile/presentation/pages/pofile.dart';

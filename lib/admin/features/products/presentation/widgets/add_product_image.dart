@@ -1,7 +1,7 @@
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/utils/sized_boxes.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 

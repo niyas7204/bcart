@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/utils/sized_boxes.dart';
 import 'package:amazone_clone/user/core/page_routes.dart';
 import 'package:amazone_clone/user/features/home/presentation/widgets/category_list.dart';
 import 'package:amazone_clone/user/features/home/presentation/widgets/top_moving.dart';

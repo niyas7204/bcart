@@ -1,5 +1,5 @@
 import 'package:amazone_clone/admin/features/products/presentation/pages/product_list.dart';
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/user/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:amazone_clone/admin/features/products/provider/add_product_provider.dart';
 import 'package:amazone_clone/auth/presentation/pages/login_page.dart';
-import 'package:amazone_clone/auth/provider/user_provider.dart';
+import 'package:amazone_clone/auth/controller/provider/user_provider.dart';
 import 'package:amazone_clone/core/constants/key.dart';
 import 'package:amazone_clone/user/features/cart/provider/cart_provider.dart';
 import 'package:amazone_clone/user/features/global/presentation/pages/user_landing_page.dart';

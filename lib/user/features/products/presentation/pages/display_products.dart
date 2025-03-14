@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/user/core/page_routes.dart';
 import 'package:amazone_clone/user/features/products/presentation/widgets/products_card.dart';

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:amazone_clone/auth/model/user_model.dart';
-import 'package:amazone_clone/auth/services/auth_service.dart';
+import 'package:amazone_clone/auth/controller/services/auth_service.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:flutter/material.dart';
 

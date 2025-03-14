@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:amazone_clone/core/constants/colors.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/utils/colors.dart';
+import 'package:amazone_clone/utils/sized_boxes.dart';
 import 'package:amazone_clone/user/features/cart/provider/cart_provider.dart';
 import 'package:amazone_clone/user/features/products/models/user_products_model.dart';
 import 'package:amazone_clone/user/features/products/providers/user_products_provider.dart';

@@ -1,5 +1,6 @@
-import 'package:amazone_clone/auth/provider/user_provider.dart';
+import 'package:amazone_clone/auth/controller/provider/user_provider.dart';
 import 'package:amazone_clone/core/handler.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,9 +19,10 @@ class AuhtButton extends StatelessWidget {
     final authProvider = Provider.of<UserProvider>(context);
     final size = MediaQuery.of(context).size;
     return Container(
+      height: 40,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color(0xFF3c6e71)),
+          borderRadius: BorderRadius.circular(20),
+          color: AppTheme.primeryColor1),
       child: ElevatedButton(
           onPressed: authProvider.user.status != StateStatuse.loading
               ? onPressed
@@ -40,7 +42,7 @@ class AuhtButton extends StatelessWidget {
                   ),
                 )
               : Text(
-                  isLogin ? "Sign In" : "Sign Up",
+                  "NEXT",
                   style: const TextStyle(
                       fontSize: 25,
                       color: Colors.white,

@@ -1,7 +1,7 @@
-import 'package:amazone_clone/core/constants/colors.dart';
+import 'package:amazone_clone/utils/colors.dart';
 import 'package:amazone_clone/core/handler.dart';
 import 'package:amazone_clone/core/widgets/show_snackbar.dart';
-import 'package:amazone_clone/core/widgets/sized_boxes.dart';
+import 'package:amazone_clone/utils/sized_boxes.dart';
 import 'package:amazone_clone/user/features/home/providers/home_page_product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
